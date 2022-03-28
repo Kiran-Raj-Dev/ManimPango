@@ -42,30 +42,37 @@ python -m pip uninstall -y requests
 
 echo "::endgroup::"
 
-export PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig
-export CMAKE_PREFIX_PATH=$PKG_CONFIG_PATH
+export PKG_CONFIG_PATH=$PREFIX/lib/pkg-config
 export LIB_INSTALL_PREFIX=$PREFIX
 export PATH="$PATH:$PREFIX/bin"
 
 echo "::group::Install Meson"
 echo "Installing Meson and Ninja"
-pip3 install -U meson==0.60.3 ninja
+pip3 install -U meson==0.62.0 ninja
 echo "::endgroup::"
 
-echo "::group::Removing the things from brew"
-brew uninstall --ignore-dependencies brotli
-brew uninstall --ignore-dependencies pcre
-brew uninstall --ignore-dependencies libpng
-brew uninstall --ignore-dependencies freetype
-brew uninstall --ignore-dependencies libxdmcp
-brew uninstall --ignore-dependencies libxcb
-brew uninstall --ignore-dependencies xorgproto
-brew uninstall --ignore-dependencies libxau
-echo "::endgroup::"
+#echo "::group::Removing the things from brew"
+#brew uninstall --ignore-dependencies brotli
+#brew uninstall --ignore-dependencies pcre
+#brew uninstall --ignore-dependencies libpng
+#brew uninstall --ignore-dependencies freetype
+#brew uninstall --ignore-dependencies libxdmcp
+#brew uninstall --ignore-dependencies libxcb
+#brew uninstall --ignore-dependencies xorgproto
+#brew uninstall --ignore-dependencies libxau
+#echo "::endgroup::"
 
 export CFLAGS=" -w" # warning are just noise. Ignore it.
 
 echo "::group::Building and installing proxy-libintl"
+
+if [[ "$1" == arm ]]; then
+    echo Compiling for arm64
+    meson proxy-libintl libintlbuilddir --cross-file $FILE_PATH/packing/cross_file.txt
+else
+    echo Compiling for x86
+fi
+
 meson setup --buildtype=release libintlbuilddir proxy-libintl
 meson compile -C libintlbuilddir
 meson install -C libintlbuilddir
@@ -76,7 +83,7 @@ rm -rf /usr/local/share/fontconfig/conf.avail
 
 if [[ "$1" == arm ]]; then
     echo Compiling for arm64
-    meson fontconfig fontconfig_builddir --cross-file cross_file.txt
+    meson fontconfig fontconfig_builddir --cross-file $FILE_PATH/packing/cross_file.txt
 else
     echo Compiling for x86
 fi
@@ -99,7 +106,7 @@ echo "::group::Building and installing Glib"
 
 if [[ "$1" == arm ]]; then
     echo Compiling for arm64
-    meson glib glib_builddir --cross-file cross_file.txt
+    meson glib glib_builddir --cross-file $FILE_PATH/packing/cross_file.txt
 else
     echo Compiling for x86
 fi
@@ -121,7 +128,7 @@ echo "::group::Building and installing Cairo"
 
 if [[ "$1" == arm ]]; then
     echo Compiling for arm64
-    meson cairo cairo_builddir --cross-file cross_file.txt
+    meson cairo cairo_builddir --cross-file $FILE_PATH/packing/cross_file.txt
 else
     echo Compiling for x86
 fi
@@ -144,7 +151,7 @@ echo "::group::Building and installing Harfbuzz"
 
 if [[ "$1" == arm ]]; then
     echo Compiling for arm64
-    meson harfbuzz harfbuzz_builddir --cross-file cross_file.txt
+    meson harfbuzz harfbuzz_builddir --cross-file $FILE_PATH/packing/cross_file.txt
 else
     echo Compiling for x86
 fi
@@ -171,7 +178,7 @@ export LDFLAGS=" -framework Foundation "
 
 if [[ "$1" == arm ]]; then
     echo Compiling for arm64
-    meson pango pango_builddir --cross-file cross_file.txt
+    meson pango pango_builddir --cross-file $FILE_PATH/packing/cross_file.txt
 else
     echo Compiling for x86
 fi
