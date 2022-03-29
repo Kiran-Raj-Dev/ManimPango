@@ -62,7 +62,7 @@ echo "::endgroup::"
 #brew uninstall --ignore-dependencies libxau
 #echo "::endgroup::"
 
-export CFLAGS=" -w" # warning are just noise. Ignore it.
+export CFLAGS=" -w -std=c++11" # warning are just noise. Ignore it.
 
 echo "::group::Building and installing proxy-libintl"
 
