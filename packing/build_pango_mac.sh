@@ -51,18 +51,18 @@ echo "Installing Meson and Ninja"
 pip3 install -U meson==0.62.0 ninja
 echo "::endgroup::"
 
-#echo "::group::Removing the things from brew"
-#brew uninstall --ignore-dependencies brotli
-#brew uninstall --ignore-dependencies pcre
-#brew uninstall --ignore-dependencies libpng
-#brew uninstall --ignore-dependencies freetype
-#brew uninstall --ignore-dependencies libxdmcp
-#brew uninstall --ignore-dependencies libxcb
-#brew uninstall --ignore-dependencies xorgproto
-#brew uninstall --ignore-dependencies libxau
-#echo "::endgroup::"
+echo "::group::Removing the things from brew"
+brew uninstall --ignore-dependencies brotli
+brew uninstall --ignore-dependencies pcre
+brew uninstall --ignore-dependencies libpng
+brew uninstall --ignore-dependencies freetype
+brew uninstall --ignore-dependencies libxdmcp
+brew uninstall --ignore-dependencies libxcb
+brew uninstall --ignore-dependencies xorgproto
+brew uninstall --ignore-dependencies libxau
+echo "::endgroup::"
 
-export CFLAGS=" -w -std=c++11" # warning are just noise. Ignore it.
+export CFLAGS=" -w" # warning are just noise. Ignore it.
 
 echo "::group::Building and installing proxy-libintl"
 
