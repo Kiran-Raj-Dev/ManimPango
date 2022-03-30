@@ -81,6 +81,7 @@ meson setup \
   -Dtests=disabled \
   -Dtools=disabled \
   --default-library=shared \
+  --force-fallback-for=zlib \
   fontconfig_builddir fontconfig
 meson compile -C fontconfig_builddir
 meson install -C fontconfig_builddir
