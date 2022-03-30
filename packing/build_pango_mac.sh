@@ -52,16 +52,16 @@ echo "Installing Meson and Ninja"
 pip3 install -U meson==0.60.3 ninja
 echo "::endgroup::"
 
-echo "::group::Removing the things from brew"
-brew uninstall --ignore-dependencies brotli
-brew uninstall --ignore-dependencies pcre
-brew uninstall --ignore-dependencies libpng
-brew uninstall --ignore-dependencies freetype
-brew uninstall --ignore-dependencies libxdmcp
-brew uninstall --ignore-dependencies libxcb
-brew uninstall --ignore-dependencies xorgproto
-brew uninstall --ignore-dependencies libxau
-echo "::endgroup::"
+#echo "::group::Removing the things from brew"
+#brew uninstall --ignore-dependencies brotli
+#brew uninstall --ignore-dependencies pcre
+#brew uninstall --ignore-dependencies libpng
+#brew uninstall --ignore-dependencies freetype
+#brew uninstall --ignore-dependencies libxdmcp
+#brew uninstall --ignore-dependencies libxcb
+#brew uninstall --ignore-dependencies xorgproto
+#brew uninstall --ignore-dependencies libxau
+#echo "::endgroup::"
 
 export CFLAGS=" -w" # warning are just noise. Ignore it.
 
